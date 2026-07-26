@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <title>Lingify</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#/">Lingify</a>
+      <div class="topbar-actions">
+        <select id="lang-select" class="ghost" aria-label="Language"></select>
+        <button id="help-btn" class="ghost" aria-label="Keyboard shortcuts">?</button>
+        <button id="theme-btn" class="ghost" aria-label="Toggle theme">◐</button>
+      </div>
+    </header>
+
+    <main id="app"></main>
+
+    <dialog id="help-dialog">
+      <h2>Shortcuts</h2>
+      <dl class="shortcuts">
+        <dt>Space / Enter</dt><dd>Reveal or submit</dd>
+        <dt>→ or 2</dt><dd>I got it right</dd>
+        <dt>← or 1</dt><dd>I got it wrong</dd>
+        <dt>H</dt><dd>Hint (press twice for letters)</dd>
+        <dt>L</dt><dd>Repeat later</dd>
+        <dt>R</dt><dd>Repeat now</dd>
+        <dt>M</dt><dd>Mark as challenging</dd>
+        <dt>Esc</dt><dd>End session</dd>
+      </dl>
+      <button class="btn" data-close>Close</button>
+    </dialog>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

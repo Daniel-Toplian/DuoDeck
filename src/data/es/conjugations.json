@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "infinitive": "ser",
+    "en": "to be",
+    "class": "irregular",
+    "tenses": {
+      "present": { "yo": "soy", "tu": "eres", "el": "es", "nosotros": "somos", "ellos": "son" },
+      "preterite": { "yo": "fui", "tu": "fuiste", "el": "fue", "nosotros": "fuimos", "ellos": "fueron" },
+      "imperfect": { "yo": "era", "tu": "eras", "el": "era", "nosotros": "éramos", "ellos": "eran" },
+      "future": { "yo": "seré", "tu": "serás", "el": "será", "nosotros": "seremos", "ellos": "serán" }
+    }
+  },
+  {
+    "id": 2,
+    "infinitive": "tener",
+    "en": "to have",
+    "class": "irregular",
+    "tenses": {
+      "present": { "yo": "tengo", "tu": "tienes", "el": "tiene", "nosotros": "tenemos", "ellos": "tienen" },
+      "preterite": { "yo": "tuve", "tu": "tuviste", "el": "tuvo", "nosotros": "tuvimos", "ellos": "tuvieron" },
+      "imperfect": { "yo": "tenía", "tu": "tenías", "el": "tenía", "nosotros": "teníamos", "ellos": "tenían" },
+      "future": { "yo": "tendré", "tu": "tendrás", "el": "tendrá", "nosotros": "tendremos", "ellos": "tendrán" }
+    }
+  },
+  {
+    "id": 3,
+    "infinitive": "ir",
+    "en": "to go",
+    "class": "irregular",
+    "tenses": {
+      "present": { "yo": "voy", "tu": "vas", "el": "va", "nosotros": "vamos", "ellos": "van" },
+      "preterite": { "yo": "fui", "tu": "fuiste", "el": "fue", "nosotros": "fuimos", "ellos": "fueron" },
+      "imperfect": { "yo": "iba", "tu": "ibas", "el": "iba", "nosotros": "íbamos", "ellos": "iban" },
+      "future": { "yo": "iré", "tu": "irás", "el": "irá", "nosotros": "iremos", "ellos": "irán" }
+    }
+  },
+  {
+    "id": 4,
+    "infinitive": "hablar",
+    "en": "to speak",
+    "class": "regular-ar",
+    "tenses": {
+      "present": { "yo": "hablo", "tu": "hablas", "el": "habla", "nosotros": "hablamos", "ellos": "hablan" },
+      "preterite": { "yo": "hablé", "tu": "hablaste", "el": "habló", "nosotros": "hablamos", "ellos": "hablaron" },
+      "imperfect": { "yo": "hablaba", "tu": "hablabas", "el": "hablaba", "nosotros": "hablábamos", "ellos": "hablaban" },
+      "future": { "yo": "hablaré", "tu": "hablarás", "el": "hablará", "nosotros": "hablaremos", "ellos": "hablarán" }
+    }
+  },
+  {
+    "id": 5,
+    "infinitive": "comer",
+    "en": "to eat",
+    "class": "regular-er",
+    "tenses": {
+      "present": { "yo": "como", "tu": "comes", "el": "come", "nosotros": "comemos", "ellos": "comen" },
+      "preterite": { "yo": "comí", "tu": "comiste", "el": "comió", "nosotros": "comimos", "ellos": "comieron" },
+      "imperfect": { "yo": "comía", "tu": "comías", "el": "comía", "nosotros": "comíamos", "ellos": "comían" },
+      "future": { "yo": "comeré", "tu": "comerás", "el": "comerá", "nosotros": "comeremos", "ellos": "comerán" }
+    }
+  },
+  {
+    "id": 6,
+    "infinitive": "vivir",
+    "en": "to live",
+    "class": "regular-ir",
+    "tenses": {
+      "present": { "yo": "vivo", "tu": "vives", "el": "vive", "nosotros": "vivimos", "ellos": "viven" },
+      "preterite": { "yo": "viví", "tu": "viviste", "el": "vivió", "nosotros": "vivimos", "ellos": "vivieron" },
+      "imperfect": { "yo": "vivía", "tu": "vivías", "el": "vivía", "nosotros": "vivíamos", "ellos": "vivían" },
+      "future": { "yo": "viviré", "tu": "vivirás", "el": "vivirá", "nosotros": "viviremos", "ellos": "vivirán" }
+    }
+  }
+]

@@ -1,0 +1,23 @@
+[
+  { "id": 1, "es": "tiempo", "en": "time", "pos": "noun", "gender": "m", "rank": 1 },
+  { "id": 2, "es": "hombre", "en": "man", "pos": "noun", "gender": "m", "rank": 2 },
+  { "id": 3, "es": "camino", "en": "way", "pos": "noun", "gender": "m", "rank": 3 },
+  { "id": 4, "es": "gente", "en": "people", "pos": "noun", "gender": "f", "rank": 4 },
+  { "id": 5, "es": "vida", "en": "life", "pos": "noun", "gender": "f", "rank": 5 },
+  { "id": 6, "es": "día", "en": "day", "pos": "noun", "gender": "m", "rank": 6 },
+  { "id": 7, "es": "trabajo", "en": "work", "pos": "noun", "gender": "m", "rank": 7 },
+  { "id": 8, "es": "llamada", "en": "call", "pos": "noun", "gender": "f", "rank": 8 },
+  { "id": 9, "es": "noche", "en": "night", "pos": "noun", "gender": "f", "rank": 9 },
+  { "id": 10, "es": "hogar", "en": "home", "pos": "noun", "gender": "m", "rank": 10 },
+  { "id": 11, "es": "pensamiento", "en": "thought", "pos": "noun", "gender": "m", "rank": 11 },
+  { "id": 12, "es": "dinero", "en": "money", "pos": "noun", "gender": "m", "rank": 12 },
+  { "id": 13, "es": "nombre", "en": "name", "pos": "noun", "gender": "m", "rank": 13 },
+  { "id": 14, "es": "padre", "en": "father", "pos": "noun", "gender": "m", "rank": 14 },
+  { "id": 15, "es": "chico", "en": "guy", "pos": "noun", "gender": "m", "rank": 15 },
+  { "id": 16, "es": "ser", "en": "to be", "pos": "verb", "gender": null, "rank": 1 },
+  { "id": 17, "es": "tener", "en": "to have", "pos": "verb", "gender": null, "rank": 2 },
+  { "id": 18, "es": "ir", "en": "to go", "pos": "verb", "gender": null, "rank": 3 },
+  { "id": 19, "es": "hablar", "en": "to speak", "pos": "verb", "gender": null, "rank": 4 },
+  { "id": 20, "es": "comer", "en": "to eat", "pos": "verb", "gender": null, "rank": 5 },
+  { "id": 21, "es": "vivir", "en": "to live", "pos": "verb", "gender": null, "rank": 6 }
+]
