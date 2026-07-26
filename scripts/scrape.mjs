@@ -14,13 +14,6 @@ const OUT_DIR = new URL('../src/data/es/', import.meta.url);
 
 const TENSE_KEYS = ['present', 'preterite', 'imperfect', 'future'];
 
-const TENSE_PATTERNS = [
-  ['present', /^(present|presente)$/i],
-  ['preterite', /(pret[eé]rito|preterite|indefinido|simple past)/i],
-  ['imperfect', /(imperfect|imperfecto)/i],
-  ['future', /^(future|futuro)( simple)?$/i],
-];
-
 const PRONOUN_PATTERNS = [
   ['yo', /^yo$/i],
   ['tu', /^(t[uú]|vos)$/i],
@@ -124,7 +117,8 @@ function textLines(html) {
 }
 
 const NOUN_ENTRY = /^(\d{1,4})[.)]\s+(.+)$/;
-const NOUN_GENDER = /^(masculine\s*\/\s*feminine|masculine|feminine|both)\b/i;
+const NOUN_GENDER =
+  /^(masculine\s*(?:\/|and|or)\s*feminine|feminine\s*(?:\/|and|or)\s*masculine|masculine|feminine|both|either)\b/i;
 
 function parseNouns(html) {
   const blob = textLines(html).join(' ').replace(/\s+/g, ' ');
@@ -135,13 +129,13 @@ function parseNouns(html) {
     const entry = NOUN_ENTRY.exec(chunk.trim());
     if (!entry) continue;
     const [, rank, rest] = entry;
-    const parts = rest.split(/\s+[-–—]\s+/);
-    if (parts.length < 3) continue;
+    const parts = rest.split(/\s*[-–—]\s+|\s+[-–—]\s*/);
+    const genderAt = parts.findIndex((text) => NOUN_GENDER.test(text));
+    if (genderAt < 2) continue;
 
-    const genderRaw = NOUN_GENDER.exec(parts[2])?.[1]?.toLowerCase();
-    if (!genderRaw) continue;
-    const en = parts[0].toLowerCase().trim();
-    const es = parts[1].toLowerCase().trim();
+    const genderRaw = NOUN_GENDER.exec(parts[genderAt])[1].toLowerCase();
+    const en = parts.slice(0, genderAt - 1).join(' - ').toLowerCase().trim();
+    const es = parts[genderAt - 1].toLowerCase().trim();
     if (!en || !es || seen.has(es)) continue;
 
     seen.add(es);
@@ -149,7 +143,7 @@ function parseNouns(html) {
       es,
       en,
       pos: 'noun',
-      gender: genderRaw === 'masculine' ? 'm' : genderRaw === 'feminine' ? 'f' : 'mf',
+      gender: /^masculine$/.test(genderRaw) ? 'm' : /^feminine$/.test(genderRaw) ? 'f' : 'mf',
       rank: Number(rank),
     });
   }
@@ -208,66 +202,32 @@ function matchLabel(patterns, text) {
   return null;
 }
 
-function parseTable($, table) {
-  const rows = $(table)
-    .find('tr')
-    .toArray()
-    .map((tr) =>
-      $(tr)
-        .find('th, td')
-        .toArray()
-        .map((cell) => $(cell).text().replace(/\s+/g, ' ').trim()),
-    )
-    .filter((cells) => cells.length > 1);
-
-  if (rows.length < 2) return null;
-
-  const header = rows[0];
-  const headerTenses = header.map((cell) => matchLabel(TENSE_PATTERNS, cell));
-  const headerPronouns = header.map((cell) => matchLabel(PRONOUN_PATTERNS, cell));
-  const found = {};
-
-  if (headerTenses.filter(Boolean).length >= 2) {
-    for (const cells of rows.slice(1)) {
-      const slot = matchLabel(PRONOUN_PATTERNS, cells[0]);
-      if (!slot) continue;
-      headerTenses.forEach((tense, column) => {
-        if (!tense || !cells[column]) return;
-        found[tense] ??= {};
-        found[tense][slot] ??= cells[column].toLowerCase();
-      });
-    }
-    return found;
-  }
-
-  if (headerPronouns.filter(Boolean).length >= 2) {
-    for (const cells of rows.slice(1)) {
-      const tense = matchLabel(TENSE_PATTERNS, cells[0]);
-      if (!tense) continue;
-      headerPronouns.forEach((slot, column) => {
-        if (!slot || !cells[column]) return;
-        found[tense] ??= {};
-        found[tense][slot] ??= cells[column].toLowerCase();
-      });
-    }
-    return found;
-  }
-
-  return null;
+function parseTenseTable($, section) {
+  const forms = {};
+  $(section)
+    .find('table')
+    .first()
+    .find('tbody tr')
+    .each((_, row) => {
+      const cells = $(row).find('td');
+      const slot = matchLabel(PRONOUN_PATTERNS, cells.first().text());
+      const form = cells.filter('.spanish-conjugation').first().text().replace(/\s+/g, ' ').trim();
+      if (!slot || !form || form === '-') return;
+      forms[slot] ??= form.toLowerCase();
+    });
+  return forms;
 }
 
 function parseVerbPage(html, infinitive) {
   const $ = cheerio.load(html);
   const merged = {};
 
-  $('table').each((_, table) => {
-    const parsed = parseTable($, table);
-    if (!parsed) return;
-    for (const [tense, forms] of Object.entries(parsed)) {
-      merged[tense] ??= {};
-      for (const [slot, form] of Object.entries(forms)) merged[tense][slot] ??= form;
-    }
-  });
+  for (const tense of TENSE_KEYS) {
+    const section = $(`#${tense}-indicative`).first();
+    if (!section.length) continue;
+    const forms = parseTenseTable($, section);
+    if (Object.keys(forms).length) merged[tense] = forms;
+  }
 
   const tenses = {};
   for (const tense of TENSE_KEYS) {
@@ -283,6 +243,32 @@ function parseVerbPage(html, infinitive) {
   }
 
   return tenses;
+}
+
+async function readExisting(name) {
+  try {
+    const parsed = JSON.parse(await readFile(new URL(name, OUT_DIR), 'utf8'));
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function mergeBy(field, existing, incoming) {
+  const merged = [...existing];
+  const positions = new Map(merged.map((entry, position) => [entry[field], position]));
+
+  for (const entry of incoming) {
+    const at = positions.get(entry[field]);
+    if (at === undefined) {
+      positions.set(entry[field], merged.length);
+      merged.push(entry);
+    } else {
+      merged[at] = { ...merged[at], ...entry };
+    }
+  }
+
+  return merged.map((entry, position) => ({ ...entry, id: position + 1 }));
 }
 
 function validate(vocab, conjugations) {
@@ -350,7 +336,7 @@ async function main() {
   const targets = byUsefulness(index).slice(0, VERB_LIMIT);
 
   for (const [position, verb] of targets.entries()) {
-    process.stdout.write(`  [${position + 1}/${targets.length}] ${verb.infinitive}\r`);
+    process.stdout.write(`  [${position + 1}/${targets.length}] ${verb.infinitive.padEnd(24)}\r`);
     try {
       const tenses = parseVerbPage(await fetchCached(verb.url), verb.infinitive);
       conjugations.push({
@@ -382,14 +368,23 @@ async function main() {
       rank: position + 1,
     }));
 
-  const vocab = [...nouns, ...verbVocab].map((item, index) => ({ id: index + 1, ...item }));
+  const [oldVocab, oldConjugations] = await Promise.all([
+    readExisting('vocab.json'),
+    readExisting('conjugations.json'),
+  ]);
 
-  validate(vocab, conjugations);
+  const vocab = mergeBy('es', oldVocab, [...nouns, ...verbVocab]);
+  const merged = mergeBy('infinitive', oldConjugations, conjugations);
 
-  await writeFile(new URL('vocab.json', OUT_DIR), `${JSON.stringify(vocab)}\n`);
-  await writeFile(new URL('conjugations.json', OUT_DIR), `${JSON.stringify(conjugations)}\n`);
+  validate(vocab, merged);
 
-  console.log(`\nWrote ${vocab.length} vocab entries and ${conjugations.length} conjugation tables.`);
+  await writeFile(new URL('vocab.json', OUT_DIR), `${JSON.stringify(vocab, null, 1)}\n`);
+  await writeFile(new URL('conjugations.json', OUT_DIR), `${JSON.stringify(merged, null, 1)}\n`);
+
+  console.log(
+    `\nWrote ${vocab.length} vocab entries (+${vocab.length - oldVocab.length}) and ` +
+      `${merged.length} conjugation tables (+${merged.length - oldConjugations.length}).`,
+  );
 }
 
 main().catch((error) => {
