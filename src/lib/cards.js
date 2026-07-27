@@ -15,6 +15,53 @@ export function conjugationKey(entry) {
   return `c:${entry.infinitive}`;
 }
 
+export function numberKey(n) {
+  return `n:${n}`;
+}
+
+function numberMeta(n, band) {
+  if (n > 20 && n < 30) return `${band} · veinti-`;
+  if (n > 30 && n < 100 && n % 10 !== 0) return `${band} · decenas + y`;
+  if (n > 100) return `${band} · cientos`;
+  return band;
+}
+
+export function buildNumberCard(n, { direction }, { numberToWords, numberBand }) {
+  const resolved = direction === 'mixed' ? pick(['num-word', 'word-num']) : direction;
+  const word = numberToWords(n);
+  const band = numberBand(n);
+
+  if (resolved === 'word-num') {
+    return {
+      key: numberKey(n),
+      kind: 'number',
+      tag: 'ES → 123',
+      prompt: word,
+      promptSub: null,
+      answer: String(n),
+      answerNote: null,
+      typed: true,
+      meta: band,
+      inputMode: 'numeric',
+      accents: false,
+    };
+  }
+
+  return {
+    key: numberKey(n),
+    kind: 'number',
+    tag: '123 → ES',
+    prompt: String(n),
+    promptSub: null,
+    answer: word,
+    answerNote: null,
+    typed: true,
+    meta: numberMeta(n, band),
+    inputMode: 'text',
+    accents: true,
+  };
+}
+
 export function buildVocabCard(item, { direction, answerMode }) {
   const resolved = direction === 'mixed' ? pick(['es-en', 'en-es']) : direction;
   const article = item.pos === 'noun' ? ARTICLE[item.gender] : null;

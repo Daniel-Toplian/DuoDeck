@@ -1,6 +1,15 @@
 import { escapeHtml } from '../lib/text.js';
 
-export function renderSetup({ app, title, subtitle, chips, advanced, onStart, onBack }) {
+export function renderSetup({
+  app,
+  title,
+  subtitle,
+  chips,
+  advanced = [],
+  links = [],
+  onStart,
+  onBack,
+}) {
   const values = {};
   [...chips, ...advanced].forEach((group) => {
     values[group.key] = group.value;
@@ -28,11 +37,27 @@ export function renderSetup({ app, title, subtitle, chips, advanced, onStart, on
         <h1>${escapeHtml(title)}</h1>
         <p class="muted">${escapeHtml(subtitle)}</p>
         ${chips.map(groupMarkup).join('')}
-        <details class="advanced">
+        ${
+          advanced.length
+            ? `<details class="advanced">
           <summary>Advanced</summary>
           ${advanced.map(groupMarkup).join('')}
-        </details>
+        </details>`
+            : ''
+        }
         <button class="btn primary big" data-act="start">Start</button>
+        ${
+          links.length
+            ? `<div class="setup-links">
+          ${links
+            .map(
+              (link) =>
+                `<a class="ghost" href="#${escapeHtml(link.path)}">${escapeHtml(link.label)}</a>`,
+            )
+            .join('')}
+        </div>`
+            : ''
+        }
       </section>`;
 
     app.querySelectorAll('.chip').forEach((el) => {

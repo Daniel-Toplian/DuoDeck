@@ -7,6 +7,8 @@ import { conjugationView } from './views/conjugation.js';
 import { flashcardsView } from './views/flashcards.js';
 import { hardView } from './views/hard.js';
 import { homeView } from './views/home.js';
+import { numbersView } from './views/numbers.js';
+import { numbersLegendView } from './views/numbersLegend.js';
 
 const app = document.querySelector('#app');
 
@@ -58,6 +60,8 @@ function setupShell() {
 route('/', () => homeView(app));
 route('/flashcards', withLoading(flashcardsView));
 route('/conjugation', withLoading(conjugationView));
+route('/numbers', withLoading(numbersView));
+route('/numbers/legend', withLoading(numbersLegendView));
 route('/hard', withLoading(hardView));
 setFallback(() => homeView(app));
 

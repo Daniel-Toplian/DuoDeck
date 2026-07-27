@@ -8,6 +8,7 @@ const DEFAULTS = {
   lang: defaultLanguage,
   flashcards: { direction: 'mixed', answerMode: 'reveal', size: 20, freq: 'all', pos: 'both' },
   conjugation: { tense: 'present', verbs: 'all', size: 20, freq: 'all' },
+  numbers: { direction: 'mixed', range: '1-100', size: 20 },
 };
 
 function read() {
@@ -21,6 +22,7 @@ function read() {
         ...parsed.settings,
         flashcards: { ...DEFAULTS.flashcards, ...parsed.settings?.flashcards },
         conjugation: { ...DEFAULTS.conjugation, ...parsed.settings?.conjugation },
+        numbers: { ...DEFAULTS.numbers, ...parsed.settings?.numbers },
       },
       hard: parsed.hard ?? {},
     };

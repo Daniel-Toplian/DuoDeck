@@ -1,5 +1,6 @@
 const vocabLoaders = import.meta.glob('./*/vocab.json');
 const conjugationLoaders = import.meta.glob('./*/conjugations.json');
+const numberLoaders = import.meta.glob('./*/numbers.js');
 
 const cache = new Map();
 
@@ -19,4 +20,14 @@ export function loadVocab(lang) {
 
 export function loadConjugations(lang) {
   return load(conjugationLoaders, lang, 'conjugations');
+}
+
+export async function loadNumbers(lang) {
+  const key = `numbers:${lang}`;
+  if (cache.has(key)) return cache.get(key);
+  const loader = numberLoaders[`./${lang}/numbers.js`];
+  if (!loader) throw new Error(`No numbers data for language "${lang}"`);
+  const module = await loader();
+  cache.set(key, module);
+  return module;
 }
