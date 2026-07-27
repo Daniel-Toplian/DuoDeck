@@ -1,6 +1,6 @@
 import { defaultLanguage } from './data/languages.js';
 
-const KEY = 'lingify.v1';
+const KEY = 'DuoDeck.v1';
 const CLEAR_HARD_AFTER = 2;
 
 const DEFAULTS = {
