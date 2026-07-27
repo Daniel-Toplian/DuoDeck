@@ -1,4 +1,4 @@
-# DueDeck
+# DuoDeck
 
 Personal Spanish practice app. Single static site — no backend, no runtime API calls. Vite + vanilla
 JS + hand-written CSS.

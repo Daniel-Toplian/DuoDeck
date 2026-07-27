@@ -7,7 +7,7 @@ const NOUNS_URL =
   'https://frequencylists.blogspot.com/2015/12/the-2000-most-frequently-used-spanish.html';
 const VERB_INDEX_URL = 'https://ellaverbs.com/spanish-verbs/';
 const VERB_LIMIT = Number(process.env.VERB_LIMIT ?? 400);
-const USER_AGENT = 'DueDeckScraper/1.0 (personal Spanish study project; single pass, cached)';
+const USER_AGENT = 'DuoDeckScraper/1.0 (personal Spanish study project; single pass, cached)';
 const DELAY_MS = 1000;
 const CACHE_DIR = new URL('../.cache/', import.meta.url);
 const OUT_DIR = new URL('../src/data/es/', import.meta.url);
