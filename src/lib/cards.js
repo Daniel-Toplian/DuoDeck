@@ -19,6 +19,48 @@ export function numberKey(n) {
   return `n:${n}`;
 }
 
+export function colorKey(item) {
+  return `col:${item.es}`;
+}
+
+export function buildColorCard(item, { direction }) {
+  const resolved = direction === 'mixed' ? pick(['swatch-es', 'es-en']) : direction;
+  const meta = `Color · ${item.agreement}`;
+
+  if (resolved === 'es-en') {
+    return {
+      key: colorKey(item),
+      kind: 'color',
+      tag: 'ES → EN',
+      prompt: item.es,
+      promptSub: null,
+      answer: item.en,
+      accept: item.accept ?? [],
+      answerNote: item.agreement,
+      answerSwatch: item.hex,
+      typed: true,
+      meta,
+      inputMode: 'text',
+      accents: false,
+    };
+  }
+
+  return {
+    key: colorKey(item),
+    kind: 'color',
+    tag: '🎨 → ES',
+    prompt: null,
+    promptSub: null,
+    answer: item.es,
+    answerNote: item.agreement,
+    promptSwatch: item.hex,
+    typed: true,
+    meta,
+    inputMode: 'text',
+    accents: true,
+  };
+}
+
 function numberMeta(n, band) {
   if (n > 20 && n < 30) return `${band} · veinti-`;
   if (n > 30 && n < 100 && n % 10 !== 0) return `${band} · decenas + y`;

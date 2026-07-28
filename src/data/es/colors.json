@@ -1,0 +1,96 @@
+[
+ {
+  "id": 1,
+  "es": "rojo",
+  "en": "red",
+  "hex": "#e23636",
+  "accept": [],
+  "agreement": "-o/-a"
+ },
+ {
+  "id": 2,
+  "es": "azul",
+  "en": "blue",
+  "hex": "#3b6fd4",
+  "accept": [],
+  "agreement": "invariable"
+ },
+ {
+  "id": 3,
+  "es": "verde",
+  "en": "green",
+  "hex": "#3aa757",
+  "accept": [],
+  "agreement": "invariable"
+ },
+ {
+  "id": 4,
+  "es": "amarillo",
+  "en": "yellow",
+  "hex": "#f2c53d",
+  "accept": [],
+  "agreement": "-o/-a"
+ },
+ {
+  "id": 5,
+  "es": "naranja",
+  "en": "orange",
+  "hex": "#ee7b30",
+  "accept": [],
+  "agreement": "invariable"
+ },
+ {
+  "id": 6,
+  "es": "negro",
+  "en": "black",
+  "hex": "#16181d",
+  "accept": [],
+  "agreement": "-o/-a"
+ },
+ {
+  "id": 7,
+  "es": "blanco",
+  "en": "white",
+  "hex": "#f7f7f5",
+  "accept": [],
+  "agreement": "-o/-a"
+ },
+ {
+  "id": 8,
+  "es": "gris",
+  "en": "grey",
+  "hex": "#8a8f98",
+  "accept": [
+   "gray"
+  ],
+  "agreement": "invariable"
+ },
+ {
+  "id": 9,
+  "es": "rosa",
+  "en": "pink",
+  "hex": "#f08cae",
+  "accept": [
+   "rose"
+  ],
+  "agreement": "invariable"
+ },
+ {
+  "id": 10,
+  "es": "morado",
+  "en": "purple",
+  "hex": "#7d4bc3",
+  "accept": [
+   "violet"
+  ],
+  "agreement": "-o/-a"
+ },
+ {
+  "id": 11,
+  "es": "marrón",
+  "en": "brown",
+  "hex": "#8b5e3c",
+  "accept": [],
+  "agreement": "invariable"
+ }
+]

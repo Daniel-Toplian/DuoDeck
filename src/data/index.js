@@ -1,6 +1,7 @@
 const vocabLoaders = import.meta.glob('./*/vocab.json');
 const conjugationLoaders = import.meta.glob('./*/conjugations.json');
 const numberLoaders = import.meta.glob('./*/numbers.js');
+const colorLoaders = import.meta.glob('./*/colors.json');
 
 const cache = new Map();
 
@@ -20,6 +21,10 @@ export function loadVocab(lang) {
 
 export function loadConjugations(lang) {
   return load(conjugationLoaders, lang, 'conjugations');
+}
+
+export function loadColors(lang) {
+  return load(colorLoaders, lang, 'colors');
 }
 
 export async function loadNumbers(lang) {

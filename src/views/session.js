@@ -1,4 +1,5 @@
 import { checkAnswer } from '../lib/grade.js';
+import { swatchMarkup } from '../lib/swatch.js';
 import { diffChars, escapeHtml, skeleton } from '../lib/text.js';
 import { isHard, markHard, recordResult, removeHard } from '../state.js';
 import { renderSummary } from './summary.js';
@@ -153,6 +154,7 @@ export function runSession({
     if (phase !== 'answer') return '';
     return `
       <div class="answer-block">
+        ${swatchMarkup(card.answerSwatch, 'swatch-answer')}
         ${verdictMarkup()}
         ${comparisonMarkup(card)}
         <div class="answer">${escapeHtml(card.answer)}</div>
@@ -226,7 +228,8 @@ export function runSession({
         </div>
         <div class="card ${phase === 'answer' ? 'flipped' : ''}">
           <span class="tag">${escapeHtml(card.tag)}</span>
-          <div class="prompt">${escapeHtml(card.prompt)}</div>
+          ${swatchMarkup(card.promptSwatch)}
+          ${card.prompt ? `<div class="prompt">${escapeHtml(card.prompt)}</div>` : ''}
           ${card.promptSub ? `<div class="prompt-sub">${escapeHtml(card.promptSub)}</div>` : ''}
           ${hintMarkup(card)}
           ${inputMarkup(card)}

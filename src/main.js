@@ -3,6 +3,8 @@ import './styles/app.css';
 import { languages } from './data/languages.js';
 import { render, route, setFallback, startRouter } from './router.js';
 import { getSettings, updateSettings } from './state.js';
+import { colorsView } from './views/colors.js';
+import { colorsLegendView } from './views/colorsLegend.js';
 import { conjugationView } from './views/conjugation.js';
 import { flashcardsView } from './views/flashcards.js';
 import { hardView } from './views/hard.js';
@@ -62,6 +64,8 @@ route('/flashcards', withLoading(flashcardsView));
 route('/conjugation', withLoading(conjugationView));
 route('/numbers', withLoading(numbersView));
 route('/numbers/legend', withLoading(numbersLegendView));
+route('/colors', withLoading(colorsView));
+route('/colors/legend', withLoading(colorsLegendView));
 route('/hard', withLoading(hardView));
 setFallback(() => homeView(app));
 
