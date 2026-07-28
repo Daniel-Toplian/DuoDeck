@@ -1,4 +1,4 @@
-import { sample, shuffle } from './deck.js';
+import { shuffle } from './deck.js';
 import { PRONOUN_LABEL, PRONOUN_SLOTS, TENSE_LABEL, conjugationMeta, vocabMeta } from './hint.js';
 
 const TENSES = Object.keys(TENSE_LABEL);
@@ -30,10 +30,15 @@ export function positionKey(item) {
 
 export function buildPositionCard(item, { direction }, pool) {
   const resolved = direction === 'mixed' ? pick(['pic-word', 'word-pic']) : direction;
-  const distractors = sample(
-    pool.filter((p) => p.es !== item.es),
-    3,
-  );
+  const excluded = new Set([item.es, ...(item.confusable ?? [])]);
+  const distractors = [];
+  let candidates = pool.filter((p) => !excluded.has(p.es));
+  while (distractors.length < 3 && candidates.length) {
+    const chosen = pick(candidates);
+    distractors.push(chosen);
+    const chosenExcluded = new Set([chosen.es, ...(chosen.confusable ?? [])]);
+    candidates = candidates.filter((p) => !chosenExcluded.has(p.es));
+  }
   const choices = shuffle([item, ...distractors]).map((p) => ({
     label: resolved === 'pic-word' ? p.es : null,
     scene: resolved === 'word-pic' ? p.scene : null,

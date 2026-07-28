@@ -134,6 +134,19 @@ body {
   font-weight: 600;
 }
 
+.tile-es {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.tile-es::before {
+  content: '· ';
+  color: var(--muted);
+}
+
 .tile-sub {
   color: var(--muted);
   font-size: 0.9rem;

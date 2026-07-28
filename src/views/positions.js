@@ -12,7 +12,7 @@ export async function positionsView(app) {
 
   renderSetup({
     app,
-    title: 'Positions',
+    title: 'Positions · Posiciones',
     subtitle: `${positions.length} positions · multiple choice · auto-graded`,
     chips: [
       {
@@ -42,7 +42,7 @@ function startSession(app, cards) {
   runSession({
     app,
     session: createSession(cards),
-    title: 'Positions',
+    title: 'Positions · Posiciones',
     autoGrade: true,
     trackHard: false,
     onExit: () => navigate('/'),

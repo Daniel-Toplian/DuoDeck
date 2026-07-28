@@ -12,7 +12,7 @@ export async function colorsView(app) {
 
   renderSetup({
     app,
-    title: 'Colors',
+    title: 'Colors · Colores',
     subtitle: `${colors.length} colours · auto-graded`,
     chips: [
       {
@@ -42,7 +42,7 @@ function startSession(app, cards) {
   runSession({
     app,
     session: createSession(cards),
-    title: 'Colors',
+    title: 'Colors · Colores',
     autoGrade: true,
     trackHard: false,
     onExit: () => navigate('/'),

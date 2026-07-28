@@ -22,7 +22,7 @@ export async function positionsLegendView(app) {
   app.innerHTML = `
     <section class="panel legend">
       <button class="ghost back" data-act="back">← Positions</button>
-      <h1>Positions legend</h1>
+      <h1>Positions legend · Posiciones</h1>
       <p class="muted">The ${positions.length} prepositions of place · apple and box</p>
       <div class="legend-grid colour-grid">
         ${positions.map(cellMarkup).join('')}

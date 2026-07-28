@@ -47,7 +47,7 @@ export async function numbersLegendView(app) {
   app.innerHTML = `
     <section class="panel legend">
       <button class="ghost back" data-act="back">← Numbers</button>
-      <h1>Numbers legend</h1>
+      <h1>Numbers legend · Números</h1>
       <p class="muted">1–100 and the round hundreds up to 1000</p>
       ${bands.map(bandMarkup).join('')}
     </section>`;

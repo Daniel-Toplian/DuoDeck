@@ -23,7 +23,7 @@ export async function colorsLegendView(app) {
   app.innerHTML = `
     <section class="panel legend">
       <button class="ghost back" data-act="back">← Colors</button>
-      <h1>Colours legend</h1>
+      <h1>Colours legend · Colores</h1>
       <p class="muted">The ${colors.length} core colours · masculine singular</p>
       <div class="legend-grid colour-grid">
         ${colors.map(cellMarkup).join('')}

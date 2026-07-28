@@ -43,10 +43,10 @@ const SCENES = {
   under: () => shadow(65, 88, 30) + boxClosed(38, 28) + apple(65, 77),
   inside: () => shadow(65, 86, 32) + boxOpenBack(38, 52) + apple(65, 50) + boxOpenFront(38, 52),
   outside: () =>
-    shadow(41, 86, 32) + shadow(94, 88, 14) + boxOpenBack(14, 52) + boxOpenFront(14, 52) + apple(94, 77),
+    shadow(35, 86, 32) + shadow(100, 88, 14) + boxOpenBack(8, 52) + boxOpenFront(8, 52) + apple(100, 77),
   front: () => shadow(60, 88, 34) + boxClosed(38, 45) + apple(60, 74),
   behind: () => shadow(65, 86, 32) + apple(50, 38) + boxClosed(38, 52),
-  beside: () => shadow(51, 86, 32) + shadow(92, 88, 14) + boxClosed(24, 52) + apple(92, 77),
+  beside: () => shadow(51, 86, 32) + shadow(86, 88, 14) + boxClosed(24, 52) + apple(86, 77),
   between: () =>
     shadow(21, 84, 22) +
     shadow(91, 84, 22) +

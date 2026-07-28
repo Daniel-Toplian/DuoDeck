@@ -26,7 +26,7 @@ export async function numbersView(app) {
 
   renderSetup({
     app,
-    title: 'Numbers',
+    title: 'Numbers · Números',
     subtitle: `${numbers.numberPool('all').length} numbers · auto-graded`,
     chips: [
       {
@@ -59,7 +59,7 @@ function startSession(app, cards) {
   runSession({
     app,
     session: createSession(cards),
-    title: 'Numbers',
+    title: 'Numbers · Números',
     autoGrade: true,
     trackHard: false,
     onExit: () => navigate('/'),

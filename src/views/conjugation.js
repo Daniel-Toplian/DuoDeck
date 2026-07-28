@@ -27,7 +27,7 @@ export async function conjugationView(app) {
 
   renderSetup({
     app,
-    title: 'Conjugation',
+    title: 'Conjugation · Conjugación',
     subtitle: `${entries.length} verbs · type the form, grade yourself`,
     chips: [
       {
@@ -87,7 +87,7 @@ function startSession(app, cards) {
   runSession({
     app,
     session: createSession(cards),
-    title: 'Conjugation',
+    title: 'Conjugation · Conjugación',
     onExit: () => navigate('/'),
     onPractiseMissed: (missed) => startSession(app, missed),
   });

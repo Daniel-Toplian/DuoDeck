@@ -34,7 +34,7 @@ export async function flashcardsView(app) {
 
   renderSetup({
     app,
-    title: 'Flashcards',
+    title: 'Flashcards · Tarjetas',
     subtitle: `${vocab.length} words · self-graded`,
     chips: [
       {
@@ -91,7 +91,7 @@ function startSession(app, cards) {
   runSession({
     app,
     session: createSession(cards),
-    title: 'Flashcards',
+    title: 'Flashcards · Tarjetas',
     onExit: () => navigate('/'),
     onPractiseMissed: (missed) => startSession(app, missed),
   });
