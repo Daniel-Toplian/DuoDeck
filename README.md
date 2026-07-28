@@ -3,25 +3,29 @@
 Personal Spanish practice app. Single static site — no backend, no runtime API calls. Vite + vanilla
 JS + hand-written CSS.
 
-Four drills:
+Five drills:
 
 - **Flashcards** — vocabulary in both directions (ES→EN and EN→ES, or mixed). EN→ES can be typed.
 - **Conjugation** — a verb, a tense and one pronoun slot; type the form.
 - **Numbers** — 1–100 plus the round hundreds to 1000, digits→Spanish or Spanish→digits, or mixed.
 - **Colors** — the 11 core colours, swatch→Spanish or Spanish→English, or mixed.
+- **Positions** — 8 prepositions of place, multiple choice: an apple-and-box scene with 4 options,
+  picture→word or word→picture, or mixed. Keys `1`–`4` select an option.
 
 Two grading models, because the two kinds of drill differ:
 
 - Flashcards and Conjugation are **self-graded** — the app never decides whether you were right.
   Typed answers are shown next to the correct form so you can judge for yourself.
-- Numbers and Colors are **auto-graded** — the answer set is closed and unambiguous, so the app
-  computes a verdict on reveal. Matching is lenient (case, accents and spacing) and nags about a
-  missing accent rather than failing you. `Wrong`/`Right` remain available to override the verdict.
+- Numbers, Colors and Positions are **auto-graded** — the answer set is closed and unambiguous, so
+  the app computes a verdict on reveal. Typed matching is lenient (case, accents and spacing) and
+  nags about a missing accent rather than failing you; multiple choice grades the click directly.
+  `Wrong`/`Right` remain available to override the verdict.
 
 Auto-graded drills are deliberately excluded from the **Challenging** list; it tracks vocabulary
 and verbs only.
 
-Both legends (`Numbers`, `Colors`) are browsable reference tables, reachable from their setup screen.
+Each auto-graded drill (`Numbers`, `Colors`, `Positions`) ships a browsable legend, reachable from
+its setup screen.
 
 ## Running
 
@@ -69,9 +73,18 @@ exports `numberToWords(n)`, `numberPool(rangeKey)` and `numberBand(n)` instead o
 strings. Irregular forms (`dieciséis`, `veintidós`, `quinientos`, `setecientos`) come from lookup
 tables rather than being composed.
 
+`src/data/es/positions.js` — the 8 prepositions of place, each pointing at a scene key:
+
+```js
+{ id: 1, es: 'encima de', en: 'on top of', scene: 'on' }
+```
+
+The scenes themselves (apple and box, drawn as inline SVG) live in `src/lib/scenes.js` and are
+language-neutral — a new language reuses them and only translates the phrases.
+
 Adding a language: create `src/data/<code>/{vocab,conjugations,colors}.json` plus
-`src/data/<code>/numbers.js`, and add one entry to `src/data/languages.js`. Each language is loaded
-lazily as its own chunk.
+`src/data/<code>/{numbers,positions}.js`, and add one entry to `src/data/languages.js`. Each
+language is loaded lazily as its own chunk.
 
 ### Regenerating the data
 

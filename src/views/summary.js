@@ -1,3 +1,4 @@
+import { sceneMarkup } from '../lib/scenes.js';
 import { swatchMarkup } from '../lib/swatch.js';
 import { escapeHtml } from '../lib/text.js';
 
@@ -24,7 +25,8 @@ export function renderSummary({ app, session, title, onExit, onPractiseMissed })
                    <span class="missed-prompt">${
                      card.prompt
                        ? escapeHtml(card.prompt)
-                       : swatchMarkup(card.promptSwatch, 'swatch-sm')
+                       : swatchMarkup(card.promptSwatch, 'swatch-sm') ||
+                         sceneMarkup(card.promptScene, { size: 'sm' })
                    }${card.tag ? ` <em>${escapeHtml(card.tag)}</em>` : ''}</span>
                    <span class="missed-answer">${escapeHtml(card.answer)}</span>
                    ${session.hinted.has(card.key) ? '<span class="pill">hinted</span>' : ''}

@@ -10,6 +10,7 @@ const DEFAULTS = {
   conjugation: { tense: 'present', verbs: 'all', size: 20, freq: 'all' },
   numbers: { direction: 'mixed', range: '1-100', size: 20 },
   colors: { direction: 'mixed' },
+  positions: { direction: 'mixed' },
 };
 
 function read() {
@@ -25,6 +26,7 @@ function read() {
         conjugation: { ...DEFAULTS.conjugation, ...parsed.settings?.conjugation },
         numbers: { ...DEFAULTS.numbers, ...parsed.settings?.numbers },
         colors: { ...DEFAULTS.colors, ...parsed.settings?.colors },
+        positions: { ...DEFAULTS.positions, ...parsed.settings?.positions },
       },
       hard: parsed.hard ?? {},
     };

@@ -1,3 +1,4 @@
+import { sample, shuffle } from './deck.js';
 import { PRONOUN_LABEL, PRONOUN_SLOTS, TENSE_LABEL, conjugationMeta, vocabMeta } from './hint.js';
 
 const TENSES = Object.keys(TENSE_LABEL);
@@ -21,6 +22,37 @@ export function numberKey(n) {
 
 export function colorKey(item) {
   return `col:${item.es}`;
+}
+
+export function positionKey(item) {
+  return `p:${item.es}`;
+}
+
+export function buildPositionCard(item, { direction }, pool) {
+  const resolved = direction === 'mixed' ? pick(['pic-word', 'word-pic']) : direction;
+  const distractors = sample(
+    pool.filter((p) => p.es !== item.es),
+    3,
+  );
+  const choices = shuffle([item, ...distractors]).map((p) => ({
+    label: resolved === 'pic-word' ? p.es : null,
+    scene: resolved === 'word-pic' ? p.scene : null,
+    correct: p.es === item.es,
+  }));
+
+  return {
+    key: positionKey(item),
+    kind: 'position',
+    tag: resolved === 'pic-word' ? '🖼 → ES' : 'ES → 🖼',
+    prompt: resolved === 'word-pic' ? item.es : null,
+    promptSub: null,
+    promptScene: resolved === 'pic-word' ? item.scene : null,
+    answer: item.es,
+    answerNote: item.en,
+    typed: false,
+    choices,
+    meta: item.en,
+  };
 }
 
 export function buildColorCard(item, { direction }) {

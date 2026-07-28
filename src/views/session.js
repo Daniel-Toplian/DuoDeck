@@ -1,4 +1,5 @@
 import { checkAnswer } from '../lib/grade.js';
+import { sceneMarkup } from '../lib/scenes.js';
 import { swatchMarkup } from '../lib/swatch.js';
 import { diffChars, escapeHtml, skeleton } from '../lib/text.js';
 import { isHard, markHard, recordResult, removeHard } from '../state.js';
@@ -19,6 +20,7 @@ export function runSession({
   let hintStage = 0;
   let typedValue = '';
   let verdict = null;
+  let picked = null;
 
   function teardown() {
     removeEventListener('keydown', onKey);
@@ -40,6 +42,7 @@ export function runSession({
     hintStage = 0;
     typedValue = '';
     verdict = null;
+    picked = null;
     render();
   }
 
@@ -53,13 +56,22 @@ export function runSession({
   }
 
   function reveal() {
+    const card = session.current();
+    if (card?.choices) return;
     const input = app.querySelector('#answer-input');
     if (input) typedValue = input.value;
     phase = 'answer';
-    if (autoGrade) {
-      const card = session.current();
-      if (card) verdict = checkAnswer(card, typedValue);
-    }
+    if (autoGrade && card) verdict = checkAnswer(card, typedValue);
+    render();
+  }
+
+  function selectChoice(index) {
+    if (phase !== 'question') return;
+    const card = session.current();
+    if (!card?.choices?.[index]) return;
+    picked = index;
+    verdict = { correct: card.choices[index].correct, note: null };
+    phase = 'answer';
     render();
   }
 
@@ -72,6 +84,14 @@ export function runSession({
       return;
     }
     if (phase === 'question') {
+      if (!inInput && ['1', '2', '3', '4'].includes(event.key)) {
+        const card = session.current();
+        if (card?.choices) {
+          event.preventDefault();
+          selectChoice(Number(event.key) - 1);
+          return;
+        }
+      }
       if (event.key === 'Enter' || (event.key === ' ' && !inInput)) {
         event.preventDefault();
         reveal();
@@ -96,9 +116,10 @@ export function runSession({
   }
 
   function hint() {
-    if (hintStage >= 2) return;
-    hintStage += 1;
     const card = session.current();
+    const maxStage = card?.choices ? 1 : 2;
+    if (hintStage >= maxStage) return;
+    hintStage += 1;
     if (card) session.markHinted(card);
     render();
   }
@@ -181,6 +202,29 @@ export function runSession({
       </div>`;
   }
 
+  function choicesMarkup(card) {
+    if (!card.choices) return '';
+    const answered = phase === 'answer';
+    return `
+      <div class="choices ${card.choices.some((c) => c.scene) ? 'choices-scenes' : ''}">
+        ${card.choices
+          .map((choice, i) => {
+            const state = answered
+              ? choice.correct
+                ? 'correct'
+                : i === picked
+                  ? 'incorrect'
+                  : ''
+              : '';
+            const content = choice.label
+              ? escapeHtml(choice.label)
+              : sceneMarkup(choice.scene, { size: 'sm' });
+            return `<button class="choice ${state}" data-choice="${i}" ${answered ? 'disabled' : ''}>${content}</button>`;
+          })
+          .join('')}
+      </div>`;
+  }
+
   function hardButton(card) {
     if (!trackHard) return '';
     return `<button class="btn subtle ${isHard(card.key) ? 'starred' : ''}" data-act="hard">★</button>`;
@@ -188,11 +232,12 @@ export function runSession({
 
   function actionsMarkup(card) {
     if (phase === 'question') {
+      const hintMax = card.choices ? 1 : 2;
       return `
         <div class="actions">
-          <button class="btn primary" data-act="reveal">${card.typed ? 'Check' : 'Reveal'}</button>
+          ${card.choices ? '' : `<button class="btn primary" data-act="reveal">${card.typed ? 'Check' : 'Reveal'}</button>`}
           <div class="actions-row">
-            <button class="btn subtle" data-act="hint">Hint${hintStage ? ` ${hintStage}/2` : ''}</button>
+            <button class="btn subtle" data-act="hint">Hint${hintStage ? ` ${hintStage}/${hintMax}` : ''}</button>
             <button class="btn subtle" data-act="later">Repeat later</button>
             ${hardButton(card)}
           </div>
@@ -229,10 +274,12 @@ export function runSession({
         <div class="card ${phase === 'answer' ? 'flipped' : ''}">
           <span class="tag">${escapeHtml(card.tag)}</span>
           ${swatchMarkup(card.promptSwatch)}
+          ${sceneMarkup(card.promptScene)}
           ${card.prompt ? `<div class="prompt">${escapeHtml(card.prompt)}</div>` : ''}
           ${card.promptSub ? `<div class="prompt-sub">${escapeHtml(card.promptSub)}</div>` : ''}
           ${hintMarkup(card)}
           ${inputMarkup(card)}
+          ${choicesMarkup(card)}
           ${answerMarkup(card)}
         </div>
         ${actionsMarkup(card)}
@@ -255,6 +302,12 @@ export function runSession({
         }
       });
     });
+
+    if (phase === 'question') {
+      app.querySelectorAll('[data-choice]').forEach((el) => {
+        el.addEventListener('click', () => selectChoice(Number(el.dataset.choice)));
+      });
+    }
 
     const input = app.querySelector('#answer-input');
     if (input) {

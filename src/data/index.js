@@ -2,6 +2,7 @@ const vocabLoaders = import.meta.glob('./*/vocab.json');
 const conjugationLoaders = import.meta.glob('./*/conjugations.json');
 const numberLoaders = import.meta.glob('./*/numbers.js');
 const colorLoaders = import.meta.glob('./*/colors.json');
+const positionLoaders = import.meta.glob('./*/positions.js');
 
 const cache = new Map();
 
@@ -27,12 +28,20 @@ export function loadColors(lang) {
   return load(colorLoaders, lang, 'colors');
 }
 
-export async function loadNumbers(lang) {
-  const key = `numbers:${lang}`;
+async function loadModule(loaders, lang, kind) {
+  const key = `${kind}:${lang}`;
   if (cache.has(key)) return cache.get(key);
-  const loader = numberLoaders[`./${lang}/numbers.js`];
-  if (!loader) throw new Error(`No numbers data for language "${lang}"`);
+  const loader = loaders[`./${lang}/${kind}.js`];
+  if (!loader) throw new Error(`No ${kind} data for language "${lang}"`);
   const module = await loader();
   cache.set(key, module);
   return module;
+}
+
+export function loadNumbers(lang) {
+  return loadModule(numberLoaders, lang, 'numbers');
+}
+
+export function loadPositions(lang) {
+  return loadModule(positionLoaders, lang, 'positions');
 }

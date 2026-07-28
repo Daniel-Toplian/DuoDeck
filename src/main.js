@@ -11,6 +11,8 @@ import { hardView } from './views/hard.js';
 import { homeView } from './views/home.js';
 import { numbersView } from './views/numbers.js';
 import { numbersLegendView } from './views/numbersLegend.js';
+import { positionsView } from './views/positions.js';
+import { positionsLegendView } from './views/positionsLegend.js';
 
 const app = document.querySelector('#app');
 
@@ -66,6 +68,8 @@ route('/numbers', withLoading(numbersView));
 route('/numbers/legend', withLoading(numbersLegendView));
 route('/colors', withLoading(colorsView));
 route('/colors/legend', withLoading(colorsLegendView));
+route('/positions', withLoading(positionsView));
+route('/positions/legend', withLoading(positionsLegendView));
 route('/hard', withLoading(hardView));
 setFallback(() => homeView(app));
 

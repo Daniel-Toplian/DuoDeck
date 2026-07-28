@@ -28,6 +28,11 @@ export function homeView(app) {
           <span class="tile-title">Colors</span>
           <span class="tile-sub">The 11 core colours</span>
         </button>
+        <button class="tile" data-go="/positions">
+          <span class="tile-icon">📦</span>
+          <span class="tile-title">Positions</span>
+          <span class="tile-sub">Prepositions of place</span>
+        </button>
       </div>
       <button class="challenging ${hard ? '' : 'empty'}" data-go="/hard">
         Challenging <strong>${hard}</strong> ${hard ? '→ practise' : ''}
