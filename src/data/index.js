@@ -3,6 +3,7 @@ const conjugationLoaders = import.meta.glob('./*/conjugations.json');
 const numberLoaders = import.meta.glob('./*/numbers.js');
 const colorLoaders = import.meta.glob('./*/colors.json');
 const positionLoaders = import.meta.glob('./*/positions.js');
+const gerundLoaders = import.meta.glob('./*/gerunds.js');
 
 const cache = new Map();
 
@@ -44,4 +45,8 @@ export function loadNumbers(lang) {
 
 export function loadPositions(lang) {
   return loadModule(positionLoaders, lang, 'positions');
+}
+
+export function loadGerunds(lang) {
+  return loadModule(gerundLoaders, lang, 'gerunds');
 }

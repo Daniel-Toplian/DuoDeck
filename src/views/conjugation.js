@@ -1,4 +1,4 @@
-import { loadConjugations } from '../data/index.js';
+import { loadConjugations, loadGerunds } from '../data/index.js';
 import { buildConjugationCard } from '../lib/cards.js';
 import { createSession, sample } from '../lib/deck.js';
 import { navigate } from '../router.js';
@@ -24,6 +24,7 @@ function filterEntries(entries, { verbs, freq }) {
 export async function conjugationView(app) {
   const settings = getSettings();
   const entries = await loadConjugations(settings.lang);
+  const gerunds = await loadGerunds(settings.lang);
 
   renderSetup({
     app,
@@ -39,6 +40,7 @@ export async function conjugationView(app) {
           { label: 'Pretérito', value: 'preterite' },
           { label: 'Imperfecto', value: 'imperfect' },
           { label: 'Futuro', value: 'future' },
+          { label: 'Gerundio (-ndo)', value: 'gerund' },
           { label: 'Random', value: 'random' },
         ],
       },
@@ -78,17 +80,22 @@ export async function conjugationView(app) {
         );
         return;
       }
-      startSession(app, sample(pool, values.size).map((entry) => buildConjugationCard(entry, values)));
+      startSession(
+        app,
+        sample(pool, values.size).map((entry) => buildConjugationCard(entry, values, gerunds)),
+        values.tense === 'gerund',
+      );
     },
   });
 }
 
-function startSession(app, cards) {
+function startSession(app, cards, autoGrade = false) {
   runSession({
     app,
     session: createSession(cards),
     title: 'Conjugation · Conjugación',
+    autoGrade,
     onExit: () => navigate('/'),
-    onPractiseMissed: (missed) => startSession(app, missed),
+    onPractiseMissed: (missed) => startSession(app, missed, autoGrade),
   });
 }

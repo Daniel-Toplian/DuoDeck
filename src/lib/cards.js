@@ -200,8 +200,26 @@ export function buildVocabCard(item, { direction, answerMode }) {
   };
 }
 
-export function buildConjugationCard(entry, { tense }) {
-  const resolvedTense = tense === 'random' ? pick(TENSES) : tense;
+export function buildConjugationCard(entry, { tense }, gerunds) {
+  if (tense === 'gerund' && gerunds) {
+    return {
+      key: conjugationKey(entry),
+      kind: 'conjugation',
+      tag: 'Gerundio',
+      prompt: entry.infinitive,
+      promptSub: entry.en,
+      answer: gerunds.gerundOf(entry.infinitive),
+      answerNote: null,
+      typed: true,
+      meta: gerunds.gerundMeta(entry.infinitive),
+      inputMode: 'text',
+      accents: true,
+      speakPrompt: true,
+      speakAnswer: true,
+    };
+  }
+
+  const resolvedTense = tense === 'random' || tense === 'gerund' ? pick(TENSES) : tense;
   const slot = pick(PRONOUN_SLOTS);
   return {
     key: conjugationKey(entry),

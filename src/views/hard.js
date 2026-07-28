@@ -1,4 +1,4 @@
-import { loadConjugations, loadVocab } from '../data/index.js';
+import { loadConjugations, loadGerunds, loadVocab } from '../data/index.js';
 import { buildConjugationCard, buildVocabCard } from '../lib/cards.js';
 import { createSession, shuffle } from '../lib/deck.js';
 import { navigate } from '../router.js';
@@ -15,6 +15,7 @@ async function resolveCards() {
 
   const vocab = needsVocab ? await loadVocab(settings.lang) : [];
   const entries = needsVerbs ? await loadConjugations(settings.lang) : [];
+  const gerunds = needsVerbs ? await loadGerunds(settings.lang) : null;
   const byWord = new Map(vocab.map((item) => [item.es, item]));
   const byInfinitive = new Map(entries.map((entry) => [entry.infinitive, entry]));
 
@@ -26,7 +27,7 @@ async function resolveCards() {
         return item ? buildVocabCard(item, settings.flashcards) : null;
       }
       const entry = byInfinitive.get(value);
-      return entry ? buildConjugationCard(entry, settings.conjugation) : null;
+      return entry ? buildConjugationCard(entry, settings.conjugation, gerunds) : null;
     })
     .filter(Boolean);
 }
