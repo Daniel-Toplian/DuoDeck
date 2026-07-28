@@ -28,8 +28,27 @@ export function positionKey(item) {
   return `p:${item.es}`;
 }
 
-export function buildPositionCard(item, { direction }, pool) {
+export function buildPositionCard(item, { direction, answerMode }, pool) {
   const resolved = direction === 'mixed' ? pick(['pic-word', 'word-pic']) : direction;
+
+  if (resolved === 'pic-word' && answerMode === 'type') {
+    return {
+      key: positionKey(item),
+      kind: 'position',
+      tag: '🖼 → ES',
+      prompt: null,
+      promptSub: null,
+      promptScene: item.scene,
+      answer: item.es,
+      answerNote: item.en,
+      typed: true,
+      meta: item.en,
+      inputMode: 'text',
+      accents: true,
+      speakAnswer: true,
+    };
+  }
+
   const excluded = new Set([item.es, ...(item.confusable ?? [])]);
   const distractors = [];
   let candidates = pool.filter((p) => !excluded.has(p.es));
@@ -57,6 +76,8 @@ export function buildPositionCard(item, { direction }, pool) {
     typed: false,
     choices,
     meta: item.en,
+    speakPrompt: resolved === 'word-pic',
+    speakAnswer: true,
   };
 }
 
@@ -79,6 +100,7 @@ export function buildColorCard(item, { direction }) {
       meta,
       inputMode: 'text',
       accents: false,
+      speakPrompt: true,
     };
   }
 
@@ -95,6 +117,7 @@ export function buildColorCard(item, { direction }) {
     meta,
     inputMode: 'text',
     accents: true,
+    speakAnswer: true,
   };
 }
 
@@ -123,6 +146,7 @@ export function buildNumberCard(n, { direction }, { numberToWords, numberBand })
       meta: band,
       inputMode: 'numeric',
       accents: false,
+      speakPrompt: true,
     };
   }
 
@@ -138,6 +162,7 @@ export function buildNumberCard(n, { direction }, { numberToWords, numberBand })
     meta: numberMeta(n, band),
     inputMode: 'text',
     accents: true,
+    speakAnswer: true,
   };
 }
 
@@ -157,6 +182,7 @@ export function buildVocabCard(item, { direction, answerMode }) {
       answerNote: article ? spanish : null,
       typed: false,
       meta: vocabMeta(item),
+      speakPrompt: true,
     };
   }
 
@@ -170,6 +196,7 @@ export function buildVocabCard(item, { direction, answerMode }) {
     answerNote: article ? spanish : null,
     typed: answerMode === 'type',
     meta: vocabMeta(item),
+    speakAnswer: true,
   };
 }
 
@@ -186,5 +213,7 @@ export function buildConjugationCard(entry, { tense }) {
     answerNote: null,
     typed: true,
     meta: conjugationMeta(entry, resolvedTense),
+    speakPrompt: true,
+    speakAnswer: true,
   };
 }

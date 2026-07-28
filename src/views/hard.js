@@ -3,6 +3,7 @@ import { buildConjugationCard, buildVocabCard } from '../lib/cards.js';
 import { createSession, shuffle } from '../lib/deck.js';
 import { navigate } from '../router.js';
 import { getSettings, hardKeys, removeHard } from '../state.js';
+import { bindSay, sayButton } from '../lib/speak.js';
 import { escapeHtml } from '../lib/text.js';
 import { runSession } from './session.js';
 
@@ -54,7 +55,7 @@ export async function hardView(app) {
         ${cards
           .map(
             (card) => `<li>
-              <span>${escapeHtml(card.key.slice(2))}<em>${card.kind === 'vocab' ? 'word' : 'verb'}</em></span>
+              <span>${escapeHtml(card.key.slice(2))}<em>${card.kind === 'vocab' ? 'word' : 'verb'}</em>${sayButton(card.key.slice(2))}</span>
               <button class="ghost" data-remove="${escapeHtml(card.key)}" aria-label="Remove">✕</button>
             </li>`,
           )
@@ -72,6 +73,7 @@ export async function hardView(app) {
       hardView(app);
     });
   });
+  bindSay(app);
 }
 
 function startSession(app, cards) {

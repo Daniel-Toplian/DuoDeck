@@ -1,4 +1,5 @@
 import { loadColors } from '../data/index.js';
+import { bindSay, sayButton } from '../lib/speak.js';
 import { swatchMarkup } from '../lib/swatch.js';
 import { escapeHtml } from '../lib/text.js';
 import { navigate } from '../router.js';
@@ -12,6 +13,7 @@ function cellMarkup(item) {
         <span class="legend-word">${escapeHtml(item.es)}</span>
         <span class="colour-en">${escapeHtml(item.en)}</span>
       </div>
+      ${sayButton(item.es)}
       <span class="colour-agreement">${escapeHtml(item.agreement)}</span>
     </div>`;
 }
@@ -31,4 +33,5 @@ export async function colorsLegendView(app) {
     </section>`;
 
   app.querySelector('[data-act="back"]').addEventListener('click', () => navigate('/colors'));
+  bindSay(app);
 }

@@ -1,4 +1,5 @@
 import { loadNumbers } from '../data/index.js';
+import { bindSay, sayButton } from '../lib/speak.js';
 import { escapeHtml } from '../lib/text.js';
 import { navigate } from '../router.js';
 import { getSettings } from '../state.js';
@@ -32,6 +33,7 @@ function bandMarkup(band) {
             ({ n, word }) => `<div class="legend-cell">
               <span class="legend-digit">${n}</span>
               <span class="legend-word">${escapeHtml(word)}</span>
+              ${sayButton(word)}
             </div>`,
           )
           .join('')}
@@ -53,4 +55,5 @@ export async function numbersLegendView(app) {
     </section>`;
 
   app.querySelector('[data-act="back"]').addEventListener('click', () => navigate('/numbers'));
+  bindSay(app);
 }

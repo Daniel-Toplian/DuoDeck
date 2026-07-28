@@ -812,6 +812,32 @@ body {
   padding: var(--space-2);
 }
 
+.say {
+  border: none;
+  background: none;
+  padding: 0 var(--space-1);
+  font-size: 0.75em;
+  cursor: pointer;
+  opacity: 0.55;
+  vertical-align: middle;
+}
+
+.say:hover {
+  opacity: 1;
+}
+
+.legend-cell .say {
+  margin-left: auto;
+}
+
+.colour-cell .say {
+  margin-left: 0;
+}
+
+.hard-list .say {
+  margin-left: var(--space-1);
+}
+
 .missed-prompt .scene {
   display: inline-block;
   width: 40px;

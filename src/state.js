@@ -10,7 +10,7 @@ const DEFAULTS = {
   conjugation: { tense: 'present', verbs: 'all', size: 20, freq: 'all' },
   numbers: { direction: 'mixed', range: '1-100', size: 20 },
   colors: { direction: 'mixed' },
-  positions: { direction: 'mixed' },
+  positions: { direction: 'mixed', answerMode: 'choice' },
 };
 
 function read() {

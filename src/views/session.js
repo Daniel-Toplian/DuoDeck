@@ -1,5 +1,6 @@
 import { checkAnswer } from '../lib/grade.js';
 import { sceneMarkup } from '../lib/scenes.js';
+import { bindSay, sayButton, speak } from '../lib/speak.js';
 import { swatchMarkup } from '../lib/swatch.js';
 import { diffChars, escapeHtml, skeleton } from '../lib/text.js';
 import { isHard, markHard, recordResult, removeHard } from '../state.js';
@@ -100,6 +101,7 @@ export function runSession({
       if (inInput) return;
       if (event.key.toLowerCase() === 'h') hint();
       if (event.key.toLowerCase() === 'l') later();
+      if (event.key.toLowerCase() === 's') speakCard();
       if (trackHard && event.key.toLowerCase() === 'm') toggleHard();
       return;
     }
@@ -112,7 +114,15 @@ export function runSession({
     if (event.key === 'ArrowRight' || event.key === '2') grade(true);
     if (event.key === 'ArrowLeft' || event.key === '1') grade(false);
     if (event.key.toLowerCase() === 'r') repeatNow();
+    if (event.key.toLowerCase() === 's') speakCard();
     if (trackHard && event.key.toLowerCase() === 'm') toggleHard();
+  }
+
+  function speakCard() {
+    const card = session.current();
+    if (!card) return;
+    if (phase === 'answer' && card.speakAnswer) speak(card.answer);
+    else if (card.speakPrompt) speak(card.prompt);
   }
 
   function hint() {
@@ -178,7 +188,7 @@ export function runSession({
         ${swatchMarkup(card.answerSwatch, 'swatch-answer')}
         ${verdictMarkup()}
         ${comparisonMarkup(card)}
-        <div class="answer">${escapeHtml(card.answer)}</div>
+        <div class="answer">${escapeHtml(card.answer)}${card.speakAnswer ? ` ${sayButton(card.answer)}` : ''}</div>
         ${card.answerNote ? `<div class="answer-note">${escapeHtml(card.answerNote)}</div>` : ''}
       </div>`;
   }
@@ -275,7 +285,7 @@ export function runSession({
           <span class="tag">${escapeHtml(card.tag)}</span>
           ${swatchMarkup(card.promptSwatch)}
           ${sceneMarkup(card.promptScene)}
-          ${card.prompt ? `<div class="prompt">${escapeHtml(card.prompt)}</div>` : ''}
+          ${card.prompt ? `<div class="prompt">${escapeHtml(card.prompt)}${card.speakPrompt ? ` ${sayButton(card.prompt)}` : ''}</div>` : ''}
           ${card.promptSub ? `<div class="prompt-sub">${escapeHtml(card.promptSub)}</div>` : ''}
           ${hintMarkup(card)}
           ${inputMarkup(card)}
@@ -308,6 +318,8 @@ export function runSession({
         el.addEventListener('click', () => selectChoice(Number(el.dataset.choice)));
       });
     }
+
+    bindSay(app);
 
     const input = app.querySelector('#answer-input');
     if (input) {

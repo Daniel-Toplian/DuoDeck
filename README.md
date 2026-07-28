@@ -9,8 +9,13 @@ Five drills:
 - **Conjugation** — a verb, a tense and one pronoun slot; type the form.
 - **Numbers** — 1–100 plus the round hundreds to 1000, digits→Spanish or Spanish→digits, or mixed.
 - **Colors** — the 11 core colours, swatch→Spanish or Spanish→English, or mixed.
-- **Positions** — 8 prepositions of place, multiple choice: an apple-and-box scene with 4 options,
-  picture→word or word→picture, or mixed. Keys `1`–`4` select an option.
+- **Positions** — 8 prepositions of place: an apple-and-box scene with 4 options (keys `1`–`4`),
+  picture→word or word→picture, or mixed. An answer-mode chip switches picture→word cards from
+  multiple choice to typing the Spanish phrase.
+
+Every Spanish word can be **pronounced**: 🔊 buttons on cards, legends and the Challenging list
+(`S` inside a session). Speech uses the browser's built-in Web Speech API — local voices, no
+network, no dependency; buttons hide automatically if the browser has no speech support.
 
 Two grading models, because the two kinds of drill differ:
 

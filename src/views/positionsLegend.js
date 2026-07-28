@@ -1,5 +1,6 @@
 import { loadPositions } from '../data/index.js';
 import { sceneMarkup } from '../lib/scenes.js';
+import { bindSay, sayButton } from '../lib/speak.js';
 import { escapeHtml } from '../lib/text.js';
 import { navigate } from '../router.js';
 import { getSettings } from '../state.js';
@@ -12,6 +13,7 @@ function cellMarkup(item) {
         <span class="legend-word">${escapeHtml(item.es)}</span>
         <span class="colour-en">${escapeHtml(item.en)}</span>
       </div>
+      ${sayButton(item.es)}
     </div>`;
 }
 
@@ -30,4 +32,5 @@ export async function positionsLegendView(app) {
     </section>`;
 
   app.querySelector('[data-act="back"]').addEventListener('click', () => navigate('/positions'));
+  bindSay(app);
 }

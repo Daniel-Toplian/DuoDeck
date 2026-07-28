@@ -25,6 +25,15 @@ export async function positionsView(app) {
           { label: 'Mixed', value: 'mixed' },
         ],
       },
+      {
+        key: 'answerMode',
+        label: 'Answer mode',
+        value: settings.positions.answerMode,
+        options: [
+          { label: 'Multiple choice', value: 'choice' },
+          { label: 'Type (🖼 → ES)', value: 'type' },
+        ],
+      },
     ],
     links: [{ label: 'Legend →', path: '/positions/legend' }],
     onBack: () => navigate('/'),
