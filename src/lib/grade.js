@@ -18,14 +18,19 @@ export function checkAnswer(card, typed) {
     return { correct: Number(digits) === Number(card.answer), note: null };
   }
 
-  const expected = card.answer;
-  if (normalize(raw) === normalize(expected)) {
-    const note =
-      keepAccents(raw) !== keepAccents(expected) ? `watch the accent: ${expected}` : null;
-    return { correct: true, note };
+  const candidates = [card.answer, ...(card.accept ?? [])];
+
+  for (const expected of candidates) {
+    if (normalize(raw) === normalize(expected)) {
+      const note =
+        keepAccents(raw) !== keepAccents(expected) ? `watch the accent: ${expected}` : null;
+      return { correct: true, note };
+    }
   }
-  if (squash(raw) === squash(expected)) {
-    return { correct: true, note: `mind the spaces: ${expected}` };
+  for (const expected of candidates) {
+    if (squash(raw) === squash(expected)) {
+      return { correct: true, note: `mind the spaces: ${expected}` };
+    }
   }
   return { correct: false, note: null };
 }

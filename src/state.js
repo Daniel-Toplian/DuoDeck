@@ -9,6 +9,7 @@ const DEFAULTS = {
   flashcards: { direction: 'mixed', answerMode: 'reveal', size: 20, freq: 'all', pos: 'both' },
   conjugation: { tense: 'present', verbs: 'all', size: 20, freq: 'all' },
   numbers: { direction: 'mixed', range: '1-100', size: 20 },
+  colors: { direction: 'mixed' },
 };
 
 function read() {
@@ -23,6 +24,7 @@ function read() {
         flashcards: { ...DEFAULTS.flashcards, ...parsed.settings?.flashcards },
         conjugation: { ...DEFAULTS.conjugation, ...parsed.settings?.conjugation },
         numbers: { ...DEFAULTS.numbers, ...parsed.settings?.numbers },
+        colors: { ...DEFAULTS.colors, ...parsed.settings?.colors },
       },
       hard: parsed.hard ?? {},
     };

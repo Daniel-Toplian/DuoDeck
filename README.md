@@ -3,13 +3,25 @@
 Personal Spanish practice app. Single static site — no backend, no runtime API calls. Vite + vanilla
 JS + hand-written CSS.
 
-Two drills:
+Four drills:
 
 - **Flashcards** — vocabulary in both directions (ES→EN and EN→ES, or mixed). EN→ES can be typed.
 - **Conjugation** — a verb, a tense and one pronoun slot; type the form.
+- **Numbers** — 1–100 plus the round hundreds to 1000, digits→Spanish or Spanish→digits, or mixed.
+- **Colors** — the 11 core colours, swatch→Spanish or Spanish→English, or mixed.
 
-Both are **self-graded**: the app never decides whether you were right. Typed answers are shown
-next to the correct form so you can judge for yourself.
+Two grading models, because the two kinds of drill differ:
+
+- Flashcards and Conjugation are **self-graded** — the app never decides whether you were right.
+  Typed answers are shown next to the correct form so you can judge for yourself.
+- Numbers and Colors are **auto-graded** — the answer set is closed and unambiguous, so the app
+  computes a verdict on reveal. Matching is lenient (case, accents and spacing) and nags about a
+  missing accent rather than failing you. `Wrong`/`Right` remain available to override the verdict.
+
+Auto-graded drills are deliberately excluded from the **Challenging** list; it tracks vocabulary
+and verbs only.
+
+Both legends (`Numbers`, `Colors`) are browsable reference tables, reachable from their setup screen.
 
 ## Running
 
@@ -41,8 +53,25 @@ npm run scrape       # regenerate src/data/es/*.json (see below)
 Four indicative tenses: `present`, `preterite`, `imperfect`, `future`. Five pronoun slots: `yo`,
 `tu`, `el` (él/ella/usted), `nosotros`, `ellos` (ellos/ellas/ustedes). No `vosotros`.
 
-Adding a language: create `src/data/<code>/{vocab,conjugations}.json` and add one entry to
-`src/data/languages.js`. Each language is loaded lazily as its own chunk.
+`src/data/es/colors.json` — the 11 core colours, base (masculine singular) form only:
+
+```json
+{ "id": 8, "es": "gris", "en": "grey", "hex": "#8a8f98", "accept": ["gray"],
+  "agreement": "invariable" }
+```
+
+`accept` lists extra English spellings the grader treats as correct (`gray`, `violet`, `rose`) —
+Spanish always has a single canonical form. `agreement` is `-o/-a` or `invariable`, shown as the
+first hint and next to the answer.
+
+`src/data/es/numbers.js` — not a data file. Spanish number words are algorithmic, so this module
+exports `numberToWords(n)`, `numberPool(rangeKey)` and `numberBand(n)` instead of 109 hand-typed
+strings. Irregular forms (`dieciséis`, `veintidós`, `quinientos`, `setecientos`) come from lookup
+tables rather than being composed.
+
+Adding a language: create `src/data/<code>/{vocab,conjugations,colors}.json` plus
+`src/data/<code>/numbers.js`, and add one entry to `src/data/languages.js`. Each language is loaded
+lazily as its own chunk.
 
 ### Regenerating the data
 

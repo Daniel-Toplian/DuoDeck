@@ -682,6 +682,60 @@ body {
   font-size: 0.95rem;
 }
 
+.swatch {
+  width: 96px;
+  height: 72px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.swatch-answer {
+  width: 72px;
+  height: 40px;
+}
+
+.swatch-sm {
+  width: 34px;
+  height: 34px;
+  flex: none;
+}
+
+.missed-prompt .swatch {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  vertical-align: -6px;
+}
+
+.colour-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.colour-cell {
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.colour-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.colour-en {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.colour-agreement {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
 @media (max-width: 560px) {
   #app {
     padding: var(--space-4) var(--space-3) var(--space-5);

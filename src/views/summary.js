@@ -1,3 +1,4 @@
+import { swatchMarkup } from '../lib/swatch.js';
 import { escapeHtml } from '../lib/text.js';
 
 export function renderSummary({ app, session, title, onExit, onPractiseMissed }) {
@@ -20,7 +21,11 @@ export function renderSummary({ app, session, title, onExit, onPractiseMissed })
              ${missed
                .map(
                  (card) => `<li>
-                   <span class="missed-prompt">${escapeHtml(card.prompt)}${card.tag ? ` <em>${escapeHtml(card.tag)}</em>` : ''}</span>
+                   <span class="missed-prompt">${
+                     card.prompt
+                       ? escapeHtml(card.prompt)
+                       : swatchMarkup(card.promptSwatch, 'swatch-sm')
+                   }${card.tag ? ` <em>${escapeHtml(card.tag)}</em>` : ''}</span>
                    <span class="missed-answer">${escapeHtml(card.answer)}</span>
                    ${session.hinted.has(card.key) ? '<span class="pill">hinted</span>' : ''}
                  </li>`,
