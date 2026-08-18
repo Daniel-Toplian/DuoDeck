@@ -1,0 +1,135 @@
+[
+ {
+  "id": 1,
+  "es": "lunes",
+  "en": "Monday",
+  "kind": "day",
+  "order": 1
+ },
+ {
+  "id": 2,
+  "es": "martes",
+  "en": "Tuesday",
+  "kind": "day",
+  "order": 2
+ },
+ {
+  "id": 3,
+  "es": "miércoles",
+  "en": "Wednesday",
+  "kind": "day",
+  "order": 3
+ },
+ {
+  "id": 4,
+  "es": "jueves",
+  "en": "Thursday",
+  "kind": "day",
+  "order": 4
+ },
+ {
+  "id": 5,
+  "es": "viernes",
+  "en": "Friday",
+  "kind": "day",
+  "order": 5
+ },
+ {
+  "id": 6,
+  "es": "sábado",
+  "en": "Saturday",
+  "kind": "day",
+  "order": 6
+ },
+ {
+  "id": 7,
+  "es": "domingo",
+  "en": "Sunday",
+  "kind": "day",
+  "order": 7
+ },
+ {
+  "id": 8,
+  "es": "enero",
+  "en": "January",
+  "kind": "month",
+  "order": 1
+ },
+ {
+  "id": 9,
+  "es": "febrero",
+  "en": "February",
+  "kind": "month",
+  "order": 2
+ },
+ {
+  "id": 10,
+  "es": "marzo",
+  "en": "March",
+  "kind": "month",
+  "order": 3
+ },
+ {
+  "id": 11,
+  "es": "abril",
+  "en": "April",
+  "kind": "month",
+  "order": 4
+ },
+ {
+  "id": 12,
+  "es": "mayo",
+  "en": "May",
+  "kind": "month",
+  "order": 5
+ },
+ {
+  "id": 13,
+  "es": "junio",
+  "en": "June",
+  "kind": "month",
+  "order": 6
+ },
+ {
+  "id": 14,
+  "es": "julio",
+  "en": "July",
+  "kind": "month",
+  "order": 7
+ },
+ {
+  "id": 15,
+  "es": "agosto",
+  "en": "August",
+  "kind": "month",
+  "order": 8
+ },
+ {
+  "id": 16,
+  "es": "septiembre",
+  "en": "September",
+  "kind": "month",
+  "order": 9
+ },
+ {
+  "id": 17,
+  "es": "octubre",
+  "en": "October",
+  "kind": "month",
+  "order": 10
+ },
+ {
+  "id": 18,
+  "es": "noviembre",
+  "en": "November",
+  "kind": "month",
+  "order": 11
+ },
+ {
+  "id": 19,
+  "es": "diciembre",
+  "en": "December",
+  "kind": "month",
+  "order": 12
+ }
+]

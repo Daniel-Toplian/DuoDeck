@@ -15,6 +15,8 @@ Five drills:
 - **Positions** — 8 prepositions of place: an apple-and-box scene with 4 options (keys `1`–`4`),
   picture→word or word→picture, or mixed. An answer-mode chip switches picture→word cards from
   multiple choice to typing the Spanish phrase.
+- **Calendar** — days of the week and months, translation both ways plus order cards
+  (`Mes 3` → `marzo`, type the day that follows `martes`). Scope chip picks days, months or both.
 
 Every Spanish word can be **pronounced**: 🔊 buttons on cards, legends and the Challenging list
 (`S` inside a session). Speech uses the browser's built-in Web Speech API — local voices, no
@@ -80,6 +82,12 @@ first hint and next to the answer.
 exports `numberToWords(n)`, `numberPool(rangeKey)` and `numberBand(n)` instead of 109 hand-typed
 strings. Irregular forms (`dieciséis`, `veintidós`, `quinientos`, `setecientos`) come from lookup
 tables rather than being composed.
+
+`src/data/es/calendar.json` — the 7 days and 12 months with their order:
+
+```json
+{ "id": 3, "es": "miércoles", "en": "Wednesday", "kind": "day", "order": 3 }
+```
 
 `src/data/es/positions.js` — the 8 prepositions of place, each pointing at a scene key:
 

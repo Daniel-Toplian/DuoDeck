@@ -28,6 +28,85 @@ export function positionKey(item) {
   return `p:${item.es}`;
 }
 
+export function calendarKey(item) {
+  return `cal:${item.es}`;
+}
+
+export function buildCalendarCard(item, { direction, mode }, pool) {
+  const resolvedMode = mode === 'mixed' ? pick(['translate', 'order']) : mode;
+  const kindLabel = item.kind === 'day' ? 'Día de la semana' : 'Mes';
+
+  if (resolvedMode === 'order') {
+    if (item.kind === 'month') {
+      return {
+        key: calendarKey(item),
+        kind: 'calendar',
+        tag: '# → ES',
+        prompt: `Mes ${item.order}`,
+        promptSub: 'type the month',
+        answer: item.es,
+        answerNote: item.en,
+        typed: true,
+        meta: kindLabel,
+        inputMode: 'text',
+        accents: true,
+        speakAnswer: true,
+      };
+    }
+    const next = pool.find((p) => p.kind === 'day' && p.order === (item.order % 7) + 1);
+    return {
+      key: calendarKey(item),
+      kind: 'calendar',
+      tag: 'Día siguiente',
+      prompt: item.es,
+      promptSub: 'type the day that follows',
+      answer: next.es,
+      answerNote: next.en,
+      typed: true,
+      meta: kindLabel,
+      inputMode: 'text',
+      accents: true,
+      speakPrompt: true,
+      speakAnswer: true,
+    };
+  }
+
+  const resolvedDir = direction === 'mixed' ? pick(['es-en', 'en-es']) : direction;
+  const orderNote = item.kind === 'month' ? `${kindLabel} · ${item.order}/12` : kindLabel;
+
+  if (resolvedDir === 'es-en') {
+    return {
+      key: calendarKey(item),
+      kind: 'calendar',
+      tag: 'ES → EN',
+      prompt: item.es,
+      promptSub: null,
+      answer: item.en,
+      answerNote: null,
+      typed: true,
+      meta: orderNote,
+      inputMode: 'text',
+      accents: false,
+      speakPrompt: true,
+    };
+  }
+
+  return {
+    key: calendarKey(item),
+    kind: 'calendar',
+    tag: 'EN → ES',
+    prompt: item.en,
+    promptSub: null,
+    answer: item.es,
+    answerNote: null,
+    typed: true,
+    meta: orderNote,
+    inputMode: 'text',
+    accents: true,
+    speakAnswer: true,
+  };
+}
+
 export function buildPositionCard(item, { direction, answerMode }, pool) {
   const resolved = direction === 'mixed' ? pick(['pic-word', 'word-pic']) : direction;
 

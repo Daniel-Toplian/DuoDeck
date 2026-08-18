@@ -4,6 +4,7 @@ const numberLoaders = import.meta.glob('./*/numbers.js');
 const colorLoaders = import.meta.glob('./*/colors.json');
 const positionLoaders = import.meta.glob('./*/positions.js');
 const gerundLoaders = import.meta.glob('./*/gerunds.js');
+const calendarLoaders = import.meta.glob('./*/calendar.json');
 
 const cache = new Map();
 
@@ -27,6 +28,10 @@ export function loadConjugations(lang) {
 
 export function loadColors(lang) {
   return load(colorLoaders, lang, 'colors');
+}
+
+export function loadCalendar(lang) {
+  return load(calendarLoaders, lang, 'calendar');
 }
 
 async function loadModule(loaders, lang, kind) {

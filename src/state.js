@@ -11,6 +11,7 @@ const DEFAULTS = {
   numbers: { direction: 'mixed', range: '1-100', size: 20 },
   colors: { direction: 'mixed' },
   positions: { direction: 'mixed', answerMode: 'choice' },
+  calendar: { scope: 'both', mode: 'mixed', direction: 'mixed' },
 };
 
 function read() {
@@ -27,6 +28,7 @@ function read() {
         numbers: { ...DEFAULTS.numbers, ...parsed.settings?.numbers },
         colors: { ...DEFAULTS.colors, ...parsed.settings?.colors },
         positions: { ...DEFAULTS.positions, ...parsed.settings?.positions },
+        calendar: { ...DEFAULTS.calendar, ...parsed.settings?.calendar },
       },
       hard: parsed.hard ?? {},
     };

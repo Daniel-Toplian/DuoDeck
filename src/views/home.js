@@ -33,6 +33,11 @@ export function homeView(app) {
           <span class="tile-title">Positions <span class="tile-es">Posiciones</span></span>
           <span class="tile-sub">Prepositions of place</span>
         </button>
+        <button class="tile" data-go="/calendar">
+          <span class="tile-icon">📅</span>
+          <span class="tile-title">Calendar <span class="tile-es">Calendario</span></span>
+          <span class="tile-sub">Days of the week and months</span>
+        </button>
       </div>
       <button class="challenging ${hard ? '' : 'empty'}" data-go="/hard">
         Challenging <strong>${hard}</strong> ${hard ? '→ practise' : ''}

@@ -3,6 +3,8 @@ import './styles/app.css';
 import { languages } from './data/languages.js';
 import { render, route, setFallback, startRouter } from './router.js';
 import { getSettings, updateSettings } from './state.js';
+import { calendarView } from './views/calendar.js';
+import { calendarLegendView } from './views/calendarLegend.js';
 import { colorsView } from './views/colors.js';
 import { colorsLegendView } from './views/colorsLegend.js';
 import { conjugationView } from './views/conjugation.js';
@@ -70,6 +72,8 @@ route('/colors', withLoading(colorsView));
 route('/colors/legend', withLoading(colorsLegendView));
 route('/positions', withLoading(positionsView));
 route('/positions/legend', withLoading(positionsLegendView));
+route('/calendar', withLoading(calendarView));
+route('/calendar/legend', withLoading(calendarLegendView));
 route('/hard', withLoading(hardView));
 setFallback(() => homeView(app));
 
