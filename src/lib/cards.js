@@ -245,7 +245,7 @@ export function buildNumberCard(n, { direction }, { numberToWords, numberBand })
   };
 }
 
-export function buildVocabCard(item, { direction, answerMode }) {
+export function buildVocabCard(item, { direction }) {
   const resolved = direction === 'mixed' ? pick(['es-en', 'en-es']) : direction;
   const article = item.pos === 'noun' ? ARTICLE[item.gender] : null;
   const spanish = article ? `${article} ${item.es}` : item.es;
@@ -259,8 +259,10 @@ export function buildVocabCard(item, { direction, answerMode }) {
       promptSub: null,
       answer: item.en,
       answerNote: article ? spanish : null,
-      typed: false,
+      typed: true,
       meta: vocabMeta(item),
+      inputMode: 'text',
+      accents: false,
       speakPrompt: true,
     };
   }
@@ -273,8 +275,10 @@ export function buildVocabCard(item, { direction, answerMode }) {
     promptSub: null,
     answer: item.es,
     answerNote: article ? spanish : null,
-    typed: answerMode === 'type',
+    typed: true,
     meta: vocabMeta(item),
+    inputMode: 'text',
+    accents: true,
     speakAnswer: true,
   };
 }

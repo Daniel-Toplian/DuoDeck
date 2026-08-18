@@ -8,10 +8,12 @@ import { calendarLegendView } from './views/calendarLegend.js';
 import { colorsView } from './views/colors.js';
 import { colorsLegendView } from './views/colorsLegend.js';
 import { conjugationView } from './views/conjugation.js';
+import { conjugationLegendView } from './views/conjugationLegend.js';
 import { flashcardsView } from './views/flashcards.js';
 import { hardView } from './views/hard.js';
 import { homeView } from './views/home.js';
 import { numbersView } from './views/numbers.js';
+import { wordsView } from './views/words.js';
 import { numbersLegendView } from './views/numbersLegend.js';
 import { positionsView } from './views/positions.js';
 import { positionsLegendView } from './views/positionsLegend.js';
@@ -65,7 +67,9 @@ function setupShell() {
 
 route('/', () => homeView(app));
 route('/flashcards', withLoading(flashcardsView));
+route('/flashcards/legend', withLoading(wordsView));
 route('/conjugation', withLoading(conjugationView));
+route('/conjugation/legend', withLoading(conjugationLegendView));
 route('/numbers', withLoading(numbersView));
 route('/numbers/legend', withLoading(numbersLegendView));
 route('/colors', withLoading(colorsView));

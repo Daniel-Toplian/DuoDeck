@@ -812,6 +812,67 @@ body {
   padding: var(--space-2);
 }
 
+.word-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+#word-search {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+}
+
+#word-search:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.endings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.endings-table th,
+.endings-table td {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.endings-table thead th {
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.endings-table thead em {
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--font-display);
+}
+
+.endings-table tbody th {
+  color: var(--muted);
+  font-weight: 400;
+  font-size: 0.85rem;
+}
+
+.endings-table td {
+  color: var(--accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
 .say {
   border: none;
   background: none;

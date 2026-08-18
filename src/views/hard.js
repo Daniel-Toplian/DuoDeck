@@ -82,6 +82,7 @@ function startSession(app, cards) {
     app,
     session: createSession(cards),
     title: 'Challenging',
+    autoGrade: true,
     onExit: () => navigate('/'),
     onPractiseMissed: (missed) => startSession(app, missed),
   });

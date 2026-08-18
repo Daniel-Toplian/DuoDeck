@@ -29,7 +29,7 @@ export async function conjugationView(app) {
   renderSetup({
     app,
     title: 'Conjugation · Conjugación',
-    subtitle: `${entries.length} verbs · type the form, grade yourself`,
+    subtitle: `${entries.length} verbs · type the form · auto-graded`,
     chips: [
       {
         key: 'tense',
@@ -69,6 +69,7 @@ export async function conjugationView(app) {
         ],
       },
     ],
+    links: [{ label: 'Endings →', path: '/conjugation/legend' }],
     onBack: () => navigate('/'),
     onStart: (values) => {
       updateDrillSettings('conjugation', values);
@@ -83,19 +84,18 @@ export async function conjugationView(app) {
       startSession(
         app,
         sample(pool, values.size).map((entry) => buildConjugationCard(entry, values, gerunds)),
-        values.tense === 'gerund',
       );
     },
   });
 }
 
-function startSession(app, cards, autoGrade = false) {
+function startSession(app, cards) {
   runSession({
     app,
     session: createSession(cards),
     title: 'Conjugation · Conjugación',
-    autoGrade,
+    autoGrade: true,
     onExit: () => navigate('/'),
-    onPractiseMissed: (missed) => startSession(app, missed, autoGrade),
+    onPractiseMissed: (missed) => startSession(app, missed),
   });
 }

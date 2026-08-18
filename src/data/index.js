@@ -5,6 +5,7 @@ const colorLoaders = import.meta.glob('./*/colors.json');
 const positionLoaders = import.meta.glob('./*/positions.js');
 const gerundLoaders = import.meta.glob('./*/gerunds.js');
 const calendarLoaders = import.meta.glob('./*/calendar.json');
+const endingLoaders = import.meta.glob('./*/endings.js');
 
 const cache = new Map();
 
@@ -54,4 +55,8 @@ export function loadPositions(lang) {
 
 export function loadGerunds(lang) {
   return loadModule(gerundLoaders, lang, 'gerunds');
+}
+
+export function loadEndings(lang) {
+  return loadModule(endingLoaders, lang, 'endings');
 }

@@ -35,7 +35,7 @@ export async function flashcardsView(app) {
   renderSetup({
     app,
     title: 'Flashcards · Tarjetas',
-    subtitle: `${vocab.length} words · self-graded`,
+    subtitle: `${vocab.length} words · type the answer · auto-graded`,
     chips: [
       {
         key: 'direction',
@@ -45,15 +45,6 @@ export async function flashcardsView(app) {
           { label: 'ES → EN', value: 'es-en' },
           { label: 'EN → ES', value: 'en-es' },
           { label: 'Mixed', value: 'mixed' },
-        ],
-      },
-      {
-        key: 'answerMode',
-        label: 'Answer mode',
-        value: settings.flashcards.answerMode,
-        options: [
-          { label: 'Reveal', value: 'reveal' },
-          { label: 'Type (EN → ES)', value: 'type' },
         ],
       },
       { key: 'size', label: 'Session size', value: settings.flashcards.size, options: SIZES },
@@ -71,6 +62,7 @@ export async function flashcardsView(app) {
         ],
       },
     ],
+    links: [{ label: 'Word list →', path: '/flashcards/legend' }],
     onBack: () => navigate('/'),
     onStart: (values) => {
       updateDrillSettings('flashcards', values);
@@ -92,6 +84,7 @@ function startSession(app, cards) {
     app,
     session: createSession(cards),
     title: 'Flashcards · Tarjetas',
+    autoGrade: true,
     onExit: () => navigate('/'),
     onPractiseMissed: (missed) => startSession(app, missed),
   });
